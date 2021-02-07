@@ -2,8 +2,6 @@ package com.eraldguri.geophysicslab;
 
 import android.os.Bundle;
 import android.view.Menu;
-
-import com.eraldguri.geophysicslab.api.http.RequestTask;
 import com.google.android.material.navigation.NavigationView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -26,22 +24,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       initViews();
-       startNavigationMenu();
-
-        networkThread.start();
+        initViews();
+        startNavigationMenu();
     }
 
-    Thread networkThread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            try {
-                RequestTask.httpRequest(getApplicationContext());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    });
 
     /**
      * @brief
