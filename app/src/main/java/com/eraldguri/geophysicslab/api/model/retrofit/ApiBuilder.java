@@ -14,7 +14,7 @@ public class ApiBuilder {
 
     private static final String BASE_URL = "https://earthquake.usgs.gov/fdsnws/event/1/";
     public static final String JSON_FORMAT = "format=geojson";
-    public static final String QUERY = "limit=10";
+    public static final String QUERY = "limit=100";
 
     public static Retrofit getRetrofitClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

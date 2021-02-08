@@ -1,5 +1,6 @@
 package com.eraldguri.geophysicslab;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -15,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eraldguri.geophysicslab.api.model.Features;
 import com.eraldguri.geophysicslab.util.DateTimeUtil;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 public class EarthquakeListAdapter extends RecyclerView.Adapter<EarthquakeListAdapter.EarthquakeListViewHolder> {
@@ -36,13 +35,15 @@ public class EarthquakeListAdapter extends RecyclerView.Adapter<EarthquakeListAd
         return new EarthquakeListViewHolder(mView);
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull EarthquakeListViewHolder holder, int position) {
         final Features earthquakes = features.get(position);
         double magnitude = earthquakes.getProperties().getMagnitude();
-        String title = earthquakes.getProperties().getTitle();
+        String place = earthquakes.getProperties().getPlace();
         String dateTime = earthquakes.getProperties().getTime();
+        int tsunami = earthquakes.getProperties().getTsunami();
 
         String formattedTime = DateTimeUtil.parseDateTimeFromString(dateTime);
 
@@ -59,8 +60,15 @@ public class EarthquakeListAdapter extends RecyclerView.Adapter<EarthquakeListAd
         }
 
         holder.magnitude.setText(String.valueOf(magnitude));
-        holder.title.setText(title);
+        holder.place.setText(place);
         holder.time.setText(formattedTime);
+
+        if (tsunami != 0) {
+            holder.tsunami.setVisibility(View.VISIBLE);
+            holder.tsunami.setText("Tsunami: " + tsunami);
+        } else {
+            holder.tsunami.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -70,14 +78,15 @@ public class EarthquakeListAdapter extends RecyclerView.Adapter<EarthquakeListAd
 
     public static class EarthquakeListViewHolder extends RecyclerView.ViewHolder {
 
-        TextView magnitude, title, time;
+        TextView magnitude, place, time, tsunami;
 
         public EarthquakeListViewHolder(@NonNull View itemView) {
             super(itemView);
 
             magnitude   = itemView.findViewById(R.id.tv_magnitude);
-            title       = itemView.findViewById(R.id.tv_earthquake_title);
+            place       = itemView.findViewById(R.id.tv_earthquake_place);
             time        = itemView.findViewById(R.id.tv_earthquake_date_time);
+            tsunami     = itemView.findViewById(R.id.tv_earthquake_tsunami);
         }
     }
 }
