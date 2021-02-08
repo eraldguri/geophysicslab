@@ -1,6 +1,8 @@
 package com.eraldguri.geophysicslab.api.model;
 
-public class Features {
+import java.io.Serializable;
+
+public class Features implements Serializable {
     public String type;
     public Properties properties;
     public Geometry geometry;

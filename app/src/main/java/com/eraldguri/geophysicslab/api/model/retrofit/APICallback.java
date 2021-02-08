@@ -9,6 +9,6 @@ import retrofit2.http.Headers;
 public interface APICallback {
 
     @Headers({"Accept: application/json"})
-    @GET("?" + ApiBuilder.JSON_FORMAT + "&" + ApiBuilder.DELIMITER)
+    @GET("query?" + ApiBuilder.JSON_FORMAT + "&" + ApiBuilder.QUERY)
     Call<Earthquake> getEarthquakes();
 }

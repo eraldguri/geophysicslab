@@ -1,7 +1,9 @@
 package com.eraldguri.geophysicslab.api.model;
 
-public class Properties {
-    public double magnitude;
+import java.io.Serializable;
+
+public class Properties implements Serializable {
+    public double mag;
     public String place;
     public String time;
     public String updated;
@@ -22,11 +24,11 @@ public class Properties {
     public String title;
 
     public double getMagnitude() {
-        return magnitude;
+        return mag;
     }
 
     public void setMagnitude(double magnitude) {
-        this.magnitude = magnitude;
+        this.mag = magnitude;
     }
 
     public String getPlace() {
