@@ -1,11 +1,19 @@
 package com.eraldguri.geophysicslab;
 
+import android.content.Context;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+
+import com.eraldguri.geophysicslab.util.NetworkStateReceiver;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,11 +25,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout mDrawer;
     private NavigationView mNavigationView;
+
+    // Receiver that detects network state changes
+    private NetworkStateReceiver mNetworkStateReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        startNetworkBroadcastReceiver(this);
         initViews();
         startNavigationMenu();
     }
@@ -72,4 +84,48 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    protected void onPause() {
+        unregisterNetworkBroadcastReceiver(this);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        registerNetworkBroadcastReceiver(this);
+        super.onResume();
+    }
+
+    public void startNetworkBroadcastReceiver(Context context) {
+        mNetworkStateReceiver = new NetworkStateReceiver();
+        mNetworkStateReceiver.addListener((NetworkStateReceiver.NetworkStateReceiverListener) context);
+        registerNetworkBroadcastReceiver(context);
+    }
+
+    /*
+    * Register the NetworkStateReceiver with your activity
+    * */
+    private void registerNetworkBroadcastReceiver(Context context) {
+        context.registerReceiver(mNetworkStateReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    /*
+    * Unregister the NetworkStateReceiver with your activity
+    * */
+    public void unregisterNetworkBroadcastReceiver(Context context) {
+        context.unregisterReceiver(mNetworkStateReceiver);
+    }
+
+    @Override
+    public void networkAvailable() {
+        Log.i("TAG", "networkAvailable()");
+    }
+
+    @Override
+    public void networkUnavailable() {
+        Log.i("TAG", "networkUnavailable()");
+        Snackbar snackbar = Snackbar.make(mDrawer, "No Internet Connection", Snackbar.LENGTH_LONG);
+        snackbar.setTextColor(getResources().getColor(R.color.red));
+        snackbar.show();
+    }
 }
