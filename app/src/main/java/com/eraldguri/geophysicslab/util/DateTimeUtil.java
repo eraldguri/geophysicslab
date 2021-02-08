@@ -4,22 +4,28 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import java.time.Instant;
-import java.time.OffsetDateTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DateTimeUtil {
 
-    public static String parseDateTimFromString(String dateTimeString) {
-        OffsetDateTime offsetDateTime = OffsetDateTime.parse(dateTimeString);
-        Instant instant = offsetDateTime.toInstant();
-        Date date = Date.from(instant);
+    private static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm'Z'";
 
-        String dateTime = date.toString();
-        String[] dateString = dateTime.split("\\+s");
-        String outDate = dateString[0] + " " + dateString[1] + " " + dateString[2] + "      " + dateString[3];
+    public static String parseDateTimeFromString(String dateTimeString) {
+        TimeZone timeZone = TimeZone.getTimeZone("UTC");
+        DateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.US);
+        dateFormat.setTimeZone(timeZone);
 
-        return outDate;
+        String formatted = dateFormat.format(new Date());
+        String dateString = formatted.substring(0, 10);
+        String timeString = formatted.replace('T', ' ').substring(11, 16);
+
+        return dateString + "   " + timeString;
+        //2021-02-08T20:33Z
     }
+
 }

@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eraldguri.geophysicslab.api.model.Features;
 import com.eraldguri.geophysicslab.util.DateTimeUtil;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 public class EarthquakeListAdapter extends RecyclerView.Adapter<EarthquakeListAdapter.EarthquakeListViewHolder> {
@@ -42,6 +44,8 @@ public class EarthquakeListAdapter extends RecyclerView.Adapter<EarthquakeListAd
         String title = earthquakes.getProperties().getTitle();
         String dateTime = earthquakes.getProperties().getTime();
 
+        String formattedTime = DateTimeUtil.parseDateTimeFromString(dateTime);
+
         if (magnitude >= 0.0 && magnitude < 2) {
             holder.magnitude.setBackgroundColor(ContextCompat.getColor(mContext, R.color.gray));
         } else if (magnitude >= 2.0 && magnitude < 3) {
@@ -56,7 +60,7 @@ public class EarthquakeListAdapter extends RecyclerView.Adapter<EarthquakeListAd
 
         holder.magnitude.setText(String.valueOf(magnitude));
         holder.title.setText(title);
-        //holder.time.setText(DateTimeUtil.parseDateTimFromString(dateTime));
+        holder.time.setText(formattedTime);
     }
 
     @Override
@@ -73,7 +77,7 @@ public class EarthquakeListAdapter extends RecyclerView.Adapter<EarthquakeListAd
 
             magnitude   = itemView.findViewById(R.id.tv_magnitude);
             title       = itemView.findViewById(R.id.tv_earthquake_title);
-            time        = itemView.findViewById(R.id.tv_earthquake_time);
+            time        = itemView.findViewById(R.id.tv_earthquake_date_time);
         }
     }
 }
