@@ -127,5 +127,6 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         Snackbar snackbar = Snackbar.make(mDrawer, "No Internet Connection", Snackbar.LENGTH_LONG);
         snackbar.setTextColor(getResources().getColor(R.color.red));
         snackbar.show();
+        //TODO:: https://gist.github.com/voghDev/71bb95a2525e7e9782b4
     }
 }
