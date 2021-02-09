@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 
+import com.eraldguri.geophysicslab.api.model.websocket.WebSocketBuilder;
 import com.eraldguri.geophysicslab.util.NetworkStateReceiver;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -25,7 +26,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
-public class MainActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener {
+import org.json.JSONObject;
+
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.WebSocket;
+
+public class MainActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener,
+        WebSocketBuilder.JsonObjectFromWebSocket {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout mDrawer;
@@ -53,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     private void initViews() {
         mDrawer = findViewById(R.id.drawer_layout);
         mNavigationView = findViewById(R.id.nav_view);
+
+        WebSocketBuilder.startWebSocketConnection(this);
     }
 
     /**
@@ -102,14 +114,14 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         registerNetworkBroadcastReceiver(context);
     }
 
-    /*
+    /**
     * Register the NetworkStateReceiver with your activity
     * */
     private void registerNetworkBroadcastReceiver(Context context) {
         context.registerReceiver(mNetworkStateReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
-    /*
+    /**
     * Unregister the NetworkStateReceiver with your activity
     * */
     public void unregisterNetworkBroadcastReceiver(Context context) {
@@ -128,5 +140,11 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         snackbar.setTextColor(getResources().getColor(R.color.red));
         snackbar.show();
         //TODO:: https://gist.github.com/voghDev/71bb95a2525e7e9782b4
+    }
+
+    @Override
+    public void passData(JSONObject jsonObject) {
+        Log.d("data: ", jsonObject.toString());
+        WebSocketBuilder.closeWebSocketConnection();
     }
 }
