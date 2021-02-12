@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.eraldguri.geophysicslab.api.model.websocket.WebSocketBuilder;
 import com.eraldguri.geophysicslab.permissions.PermissionCallback;
 import com.eraldguri.geophysicslab.permissions.PermissionUtil;
+import com.eraldguri.geophysicslab.permissions.PermissionsUtil;
 import com.eraldguri.geophysicslab.util.DeviceUtils;
 import com.eraldguri.geophysicslab.util.NetworkStateReceiver;
 import com.google.android.material.navigation.NavigationView;
@@ -56,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     // Receiver that detects network state changes
     private NetworkStateReceiver mNetworkStateReceiver;
 
+    private static final int PERMISSIONS_REQUEST_CODE = 1;
+    private PermissionsUtil mPermissions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,18 +67,27 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*if (DeviceUtils.isMarshmallow()) {
-            checkForPermissions();
-        } else {
-            Toast.makeText(MainActivity.this, "LOAD", Toast.LENGTH_LONG).show();
-        }*/
+        mPermissions = new PermissionsUtil(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
+        checkForPermissions();
         startNetworkBroadcastReceiver(this);
         initViews();
         startNavigationMenu();
 
-        checkForPermissions();
     }
+
+    private void checkForPermissions() {
+        if (mPermissions.checkPermissions()) {
+            Log.i("tag", "Permissions granted");
+        } else {
+            Log.i("tag", "Some needed permissions are missing. Requesting them.");
+            mPermissions.requestPermissions(PERMISSIONS_REQUEST_CODE);
+        }
+    }
+
+
 
     /**
      * @brief
@@ -162,41 +175,15 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         //TODO:: https://gist.github.com/voghDev/71bb95a2525e7e9782b4
     }
 
-    private final PermissionCallback mPermissionReadStorageCallback = new PermissionCallback() {
-        @Override
-        public void permissionGranted() {
-            Toast.makeText(MainActivity.this, "LOAD", Toast.LENGTH_LONG).show();
-        }
 
-        @Override
-        public void permissionRefused() {
-            finish();
-        }
-    };
-
-    private void checkForPermissions() {
-        PermissionUtil.init(getApplicationContext());
-        if (PermissionUtil.checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                && PermissionUtil.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            Toast.makeText(MainActivity.this, "LOAD", Toast.LENGTH_LONG).show();
-        } else {
-            if (PermissionUtil.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    && PermissionUtil.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Snackbar snackbar = Snackbar.make(mDrawer,
-                        "Geophysics Lab need to read and write your storage to work properly",  Snackbar.LENGTH_INDEFINITE)
-                        .setAction("OK", v -> PermissionUtil.askForPermission(MainActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-                                        Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                        mPermissionReadStorageCallback));
-                snackbar.setTextColor(getResources().getColor(R.color.red));
-                snackbar.show();
-            }
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        PermissionUtil.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (mPermissions.areAllRequiredPermissionsGranted(permissions, grantResults)) {
+            Toast.makeText(this, "Loading", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Toast.makeText(this, \"Loading\", Toast.LENGTH_LONG).show();", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
