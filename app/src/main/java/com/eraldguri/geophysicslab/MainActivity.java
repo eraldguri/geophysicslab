@@ -8,24 +8,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Toast;
 
+import com.eraldguri.geophysicslab.api.model.Earthquake;
+import com.eraldguri.geophysicslab.api.model.Features;
+import com.eraldguri.geophysicslab.api.model.retrofit.HttpRequestHelper;
 import com.eraldguri.geophysicslab.api.model.websocket.WebSocketBuilder;
-import com.eraldguri.geophysicslab.permissions.PermissionCallback;
-import com.eraldguri.geophysicslab.permissions.PermissionUtil;
 import com.eraldguri.geophysicslab.permissions.PermissionsUtil;
-import com.eraldguri.geophysicslab.util.DeviceUtils;
 import com.eraldguri.geophysicslab.util.NetworkStateReceiver;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -33,18 +28,17 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.WebSocket;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class MainActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener,
@@ -86,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
             mPermissions.requestPermissions(PERMISSIONS_REQUEST_CODE);
         }
     }
-
-
 
     /**
      * @brief
@@ -175,14 +167,12 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         //TODO:: https://gist.github.com/voghDev/71bb95a2525e7e9782b4
     }
 
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (mPermissions.areAllRequiredPermissionsGranted(permissions, grantResults)) {
             Toast.makeText(this, "Loading", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, "Toast.makeText(this, \"Loading\", Toast.LENGTH_LONG).show();", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,  "Loading", Toast.LENGTH_LONG).show();
         }
     }
 

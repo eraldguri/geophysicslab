@@ -1,80 +1,82 @@
 package com.eraldguri.geophysicslab.fragments;
 
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.eraldguri.geophysicslab.EarthquakeListAdapter;
+import com.eraldguri.geophysicslab.MainActivity;
 import com.eraldguri.geophysicslab.R;
-import com.eraldguri.geophysicslab.api.model.Earthquake;
 import com.eraldguri.geophysicslab.api.model.Features;
-import com.eraldguri.geophysicslab.api.model.retrofit.HttpRequestHelper;
+import com.eraldguri.geophysicslab.api.model.retrofit.RetrofitHelper;
+import com.eraldguri.geophysicslab.navigation.EarthquakesFragment;
 import com.eraldguri.geophysicslab.util.DividerItemDecorator;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class EarthquakeListFragment extends Fragment {
+@RequiresApi(api = Build.VERSION_CODES.M)
+public class EarthquakeListFragment extends EarthquakesFragment implements
+        EarthquakeListAdapter.OnItemClickListener {
 
     private RecyclerView mEarthquakeListView;
     private EarthquakeListAdapter mEarthquakeListAdapter;
-    private List<Features> features;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_earthquake_list, container, false);
 
         initViews(root);
-        getDataFromServer();
 
         return root;
     }
 
+    private RetrofitHelper.ConnectionCallback mConnectionCallback = new RetrofitHelper.ConnectionCallback() {
+        @Override
+        public void onSuccess(List<Features> features) {
+            setupRecyclerView(features);
+        }
+
+        @Override
+        public void onError(int code, String error) {
+            Log.d("error", code + " " + error);
+        }
+    };
+
     private void initViews(View view) {
         mEarthquakeListView = view.findViewById(R.id.rv_earthquake_data_list);
+
+        RetrofitHelper.callApi(mConnectionCallback);
     }
 
-    private void setupRecyclerView(List<Features> _features) {
+    private void setupRecyclerView(List<Features> earthquakes) {
         if (mEarthquakeListAdapter == null) {
-            mEarthquakeListAdapter = new EarthquakeListAdapter(getContext(), _features);
+            mEarthquakeListAdapter = new EarthquakeListAdapter(getContext(), earthquakes, this);
             mEarthquakeListView.setLayoutManager(new LinearLayoutManager(requireContext()));
             mEarthquakeListView.addItemDecoration(new DividerItemDecorator(requireContext()));
             mEarthquakeListView.setAdapter(mEarthquakeListAdapter);
         }
     }
 
-    private void getDataFromServer() {
-        HttpRequestHelper requestHelper = new HttpRequestHelper();
-        Callback<Earthquake> earthquakeCallback = new Callback<Earthquake>() {
-            @Override
-            public void onResponse(@NotNull Call<Earthquake> call, @NotNull Response<Earthquake> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    features = response.body().getFeatures();
-                    setupRecyclerView(features);
-                } else {
-                    System.out.println(features);
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<Earthquake> call, @NotNull Throwable t) {
-               Log.d("Error: ", t.getMessage());
-            }
-        };
-        requestHelper.getEarthquakes(earthquakeCallback);
+    @Override
+    public void onItemClick(int position, List<Features> features) {
+        Log.d("tag", "clicked: " + position);
     }
+
+  /*  @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mConnectionCallback = (RetrofitHelper.ConnectionCallback) context;
+    }*/
 }

@@ -9,12 +9,12 @@ import retrofit2.Retrofit;
 public class HttpRequestHelper {
     private static APICallback callback;
 
-    public HttpRequestHelper() {
+    public static void init()  {
         Retrofit retrofit = ApiBuilder.getRetrofitClient();
         callback = retrofit.create(APICallback.class);
     }
 
-    public void getEarthquakes(Callback<Earthquake> earthquakeCallback) {
+    public static void getEarthquakes(Callback<Earthquake> earthquakeCallback) {
         Call<Earthquake> earthquakeCall = callback.getEarthquakes();
         earthquakeCall.enqueue(earthquakeCallback);
     }

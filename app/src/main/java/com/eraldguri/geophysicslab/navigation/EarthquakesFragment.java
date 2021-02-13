@@ -1,20 +1,27 @@
 package com.eraldguri.geophysicslab.navigation;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.eraldguri.geophysicslab.R;
 import com.eraldguri.geophysicslab.TabsAdapter;
+import com.eraldguri.geophysicslab.api.model.Features;
 import com.google.android.material.tabs.TabLayout;
 
-public class EarthquakesFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+@RequiresApi(api = Build.VERSION_CODES.M)
+public class EarthquakesFragment extends Fragment{
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -24,7 +31,9 @@ public class EarthquakesFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_earthquakes, container, false);
 
+
         initViews(root);
+
         setupTabLayout();
 
         return root;
@@ -48,4 +57,6 @@ public class EarthquakesFragment extends Fragment {
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
+
+
 }
