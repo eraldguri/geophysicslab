@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.eraldguri.geophysicslab.EarthquakeListAdapter;
 import com.eraldguri.geophysicslab.MainActivity;
 import com.eraldguri.geophysicslab.R;
 import com.eraldguri.geophysicslab.api.model.Features;
+import com.eraldguri.geophysicslab.api.model.retrofit.ApiViewModel;
 import com.eraldguri.geophysicslab.api.model.retrofit.RetrofitHelper;
 import com.eraldguri.geophysicslab.navigation.EarthquakesFragment;
 import com.eraldguri.geophysicslab.util.DividerItemDecorator;
@@ -39,25 +41,14 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
 
         initViews(root);
 
+        ApiViewModel viewModel = new ViewModelProvider(requireActivity()).get(ApiViewModel.class);
+        viewModel.getFeatures().observe(getViewLifecycleOwner(), this::setupRecyclerView);
+
         return root;
     }
 
-    private RetrofitHelper.ConnectionCallback mConnectionCallback = new RetrofitHelper.ConnectionCallback() {
-        @Override
-        public void onSuccess(List<Features> features) {
-            setupRecyclerView(features);
-        }
-
-        @Override
-        public void onError(int code, String error) {
-            Log.d("error", code + " " + error);
-        }
-    };
-
     private void initViews(View view) {
         mEarthquakeListView = view.findViewById(R.id.rv_earthquake_data_list);
-
-        RetrofitHelper.callApi(mConnectionCallback);
     }
 
     private void setupRecyclerView(List<Features> earthquakes) {
@@ -74,9 +65,4 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
         Log.d("tag", "clicked: " + position);
     }
 
-  /*  @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mConnectionCallback = (RetrofitHelper.ConnectionCallback) context;
-    }*/
 }

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.eraldguri.geophysicslab.api.model.Earthquake;
 import com.eraldguri.geophysicslab.api.model.Features;
+import com.eraldguri.geophysicslab.api.model.retrofit.ApiViewModel;
 import com.eraldguri.geophysicslab.api.model.retrofit.HttpRequestHelper;
 import com.eraldguri.geophysicslab.api.model.websocket.WebSocketBuilder;
 import com.eraldguri.geophysicslab.permissions.PermissionsUtil;
@@ -21,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
