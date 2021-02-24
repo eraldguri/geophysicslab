@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.eraldguri.geophysicslab.R;
+import com.eraldguri.geophysicslab.api.model.Earthquake;
 import com.eraldguri.geophysicslab.api.model.Features;
 import com.eraldguri.geophysicslab.api.model.retrofit.ApiViewModel;
 import com.eraldguri.geophysicslab.mapview.MapViewInstance;
@@ -34,7 +35,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class NearYouFragment extends Fragment implements OnMapReadyCallback,
@@ -45,11 +50,13 @@ public class NearYouFragment extends Fragment implements OnMapReadyCallback,
     private boolean cameraPositionUpdate;
     private GoogleMap mGoogleMap;
 
-    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     PermissionUtil permissionUtil;
 
     protected Location mLocation;
     private FusedLocationProviderClient mFusedLocationClient;
+    private LatLng earthquakePoint;
+    private LatLng locationPoint;
+    private Map<String, List<Features>> nearEarthquakes = new HashMap<>();;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -107,14 +114,60 @@ public class NearYouFragment extends Fragment implements OnMapReadyCallback,
         } else {
             Log.d("TAG", "google map is null");
         }
-        ApiViewModel viewModel = new ViewModelProvider(requireActivity()).get(ApiViewModel.class);
-        viewModel.getFeatures().observe(getViewLifecycleOwner(), this::prepareMap);
     }
 
-    private void prepareMap(List<Features> features) {
+    private void prepareData(List<Features> features) {
+        for (int i = 0; i < features.size(); i++) {
+            double[] coordinates = features.get(i).getGeometry().getCoordinates();
+            double latitude = coordinates[1];
+            double longitude = coordinates[0];
+            earthquakePoint = new LatLng(latitude, longitude);
+            LatLng latLng = new LatLng(latitude, longitude);
 
+            double distance = calculateDistanceBetweenUserLocationAndEarthquake(earthquakePoint, locationPoint);
+            List<Features> nearFeatures = new ArrayList<>();
+            if (distance >= 0.0 && distance <= 15000) {
+                nearFeatures.add(features.get(i));
+                drawMarker(latLng);
+            }
+
+        }
     }
 
+    private double calculateDistanceBetweenUserLocationAndEarthquake(LatLng startPoint, LatLng endPoint) {
+        int earthRadius            = 6371;
+        double startLatitude       = startPoint.latitude;
+        double endLatitude         = endPoint.latitude;
+        double startLongitude      = startPoint.longitude;
+        double endLongitude        = endPoint.longitude;
+        double latitudeDifference  = Math.toRadians(startLatitude - endLatitude);
+        double longitudeDifference = Math.toRadians(startLongitude - endLongitude);
+
+        double arc                 = Math.sin(latitudeDifference / 2) * Math.sin(latitudeDifference)
+                                    + Math.cos(Math.toRadians(startLatitude))
+                                    * Math.cos(Math.toRadians(endLatitude)) * Math.sin(longitudeDifference / 2)
+                                    * Math.sin(longitudeDifference / 2);
+
+        double c                   = 2 * Math.asin(Math.sqrt(arc));
+        double result              = earthRadius * c;
+
+        return formatDistanceInKM(result);
+    }
+
+    private double formatDistanceInKM(double distance) {
+        double resultInKM          = distance / 1;
+        double kmInDec = 0;
+        try {
+            DecimalFormat format = new DecimalFormat("####");
+            kmInDec = Integer.parseInt(format.format(resultInKM));
+
+            Log.i("km", "result: " + distance + " " + kmInDec);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return kmInDec;
+    }
 
     private void drawMarker(LatLng latLng) {
         MarkerOptions markerOptions = new MarkerOptions();
@@ -129,8 +182,11 @@ public class NearYouFragment extends Fragment implements OnMapReadyCallback,
         mFusedLocationClient.getLastLocation().addOnCompleteListener(requireActivity(), task -> {
             if (task.isSuccessful() && task.getResult() != null) {
                 mLocation = task.getResult();
-                LatLng location = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-                drawMarker(location);
+                locationPoint = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+               // drawMarker(locationPoint);
+
+                ApiViewModel viewModel = new ViewModelProvider(requireActivity()).get(ApiViewModel.class);
+                viewModel.getFeatures().observe(getViewLifecycleOwner(), this::prepareData);
             } else {
                 Log.w("tag", "getLastLocation:exception", task.getException());
                 Toast.makeText(requireContext(), "Location not detected", Toast.LENGTH_LONG).show();
