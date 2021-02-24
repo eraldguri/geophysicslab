@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".fragments.NearYouFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.gms.maps.MapView
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map_view_quakes_near_you"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="" />
+        map:cameraZoom="0" />
 
 </FrameLayout>

@@ -16,23 +16,24 @@ import java.util.Set;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class PermissionUtil {
+
     private static final String TAG = PermissionUtil.class.getSimpleName();
     private static final String KEY_PREV_PERMISSIONS = "previous_permissions";
     private static final String KEY_IGNORED_PERMISSIONS = "ignored_permissions";
-    private static Context context;
+    private Context context;
     private static SharedPreferences sharedPreferences;
     private static final ArrayList<PermissionRequest> permissionRequests = new ArrayList<>();
 
-    public static void init(Context context) {
+    public PermissionUtil(Context context) {
         sharedPreferences = context.getSharedPreferences("runtimepermissionhelper", Context.MODE_PRIVATE);
-        PermissionUtil.context = context;
+        this.context = context;
     }
 
     /**
      * Check that all given permissions have been granted by verifying that each entry in the
      * given array is of the value {@link PackageManager#PERMISSION_GRANTED}.
      */
-    public static boolean verifyPermissions(int[] grantResults) {
+    public boolean verifyPermissions(int[] grantResults) {
         for (int result : grantResults) {
             if (result != PackageManager.PERMISSION_GRANTED) {
                 return false;
@@ -44,14 +45,14 @@ public class PermissionUtil {
     /**
      * Returns true if the Activity has access to given permissions.
      */
-    public static boolean hasPermission(Activity activity, String permission) {
+    public boolean hasPermission(Activity activity, String permission) {
         return activity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
      * Returns true if the Activity has access to a all given permission.
      */
-    public static boolean hasPermission(Activity activity, String[] permissions) {
+    public boolean hasPermission(Activity activity, String[] permissions) {
         for (String permission : permissions) {
             if (activity.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
                 return false;
@@ -64,15 +65,15 @@ public class PermissionUtil {
      * If we override other methods, lets do it as well, and keep name same as it is already weird enough.
      * Returns true if we should show explanation why we need this permission.
      */
-    public static boolean shouldShowRequestPermissionRationale(Activity activity, String permissions) {
+    public boolean shouldShowRequestPermissionRationale(Activity activity, String permissions) {
         return activity.shouldShowRequestPermissionRationale(permissions);
     }
 
-    public static void askForPermission(Activity activity, String permission, PermissionCallback permissionCallback) {
+    public void askForPermission(Activity activity, String permission, PermissionCallback permissionCallback) {
         askForPermission(activity, new String[]{permission}, permissionCallback);
     }
 
-    public static void askForPermission(Activity activity, String[] permissions, PermissionCallback permissionCallback) {
+    public void askForPermission(Activity activity, String[] permissions, PermissionCallback permissionCallback) {
         if (permissionCallback == null) {
             return;
         }
@@ -86,7 +87,7 @@ public class PermissionUtil {
         activity.requestPermissions(permissions, permissionRequest.getRequestCode());
     }
 
-    public static void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         PermissionRequest requestResult = new PermissionRequest(requestCode);
         if (permissionRequests.contains(requestResult)) {
             PermissionRequest permissionRequest = permissionRequests.get(permissionRequests.indexOf(requestResult));
@@ -110,7 +111,7 @@ public class PermissionUtil {
      *
      * @return currently granted permissions
      */
-    public static ArrayList<String> getGrantedPermissions() {
+    public ArrayList<String> getGrantedPermissions() {
         if (context == null) {
             throw new RuntimeException("Must call init() earlier");
         }
@@ -168,7 +169,7 @@ public class PermissionUtil {
     /**
      * Refresh currently granted permission list, and save it for later comparing using @permissionCompare()
      */
-    public static void refreshMonitoredList() {
+    public void refreshMonitoredList() {
         ArrayList<String> permissions = getGrantedPermissions();
         Set<String> set = new HashSet<>(permissions);
         sharedPreferences.edit().putStringSet(KEY_PREV_PERMISSIONS, set).apply();
@@ -178,18 +179,18 @@ public class PermissionUtil {
      * Get list of previous Permissions, from last refreshMonitoredList() call and they may be outdated,
      * use getGrantedPermissions() to get current
      */
-    public static ArrayList<String> getPreviousPermissions() {
+    public ArrayList<String> getPreviousPermissions() {
         return new ArrayList<>(sharedPreferences.getStringSet(KEY_PREV_PERMISSIONS, new HashSet<>()));
     }
 
-    public static ArrayList<String> getIgnoredPermissions() {
+    public ArrayList<String> getIgnoredPermissions() {
         return new ArrayList<>(sharedPreferences.getStringSet(KEY_IGNORED_PERMISSIONS, new HashSet<>()));
     }
 
     /**
      * Lets see if we already ignore this permission
      */
-    public static boolean isIgnoredPermission(String permission) {
+    public boolean isIgnoredPermission(String permission) {
         if (permission == null) {
             return false;
         }
@@ -201,7 +202,7 @@ public class PermissionUtil {
      *
      * @param permission Permission to ignore
      */
-    public static void ignorePermission(String permission) {
+    public void ignorePermission(String permission) {
         if (!isIgnoredPermission(permission)) {
             ArrayList<String> ignoredPermissions = getIgnoredPermissions();
             ignoredPermissions.add(permission);
@@ -215,7 +216,7 @@ public class PermissionUtil {
      *
      * @param permissionListener Callback that handles all permission changes
      */
-    public static void permissionCompare(PermissionListener permissionListener) {
+    public void permissionCompare(PermissionListener permissionListener) {
         if (context == null) {
             throw new RuntimeException("Before comparing permissions you need to call Nammu.init(context)");
 
@@ -259,7 +260,7 @@ public class PermissionUtil {
     /**
      * Not that needed method but if we override others it is good to keep same.
      */
-    public static boolean checkPermission(String permissionName) {
+    public boolean checkPermission(String permissionName) {
         if (context == null) {
             throw new RuntimeException("Before comparing permissions you need to call Nammu.init(context)");
         }

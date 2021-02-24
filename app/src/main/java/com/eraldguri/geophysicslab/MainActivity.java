@@ -53,9 +53,6 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     // Receiver that detects network state changes
     private NetworkStateReceiver mNetworkStateReceiver;
 
-    private static final int PERMISSIONS_REQUEST_CODE = 1;
-    private PermissionsUtil mPermissions;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,24 +60,10 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mPermissions = new PermissionsUtil(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        checkForPermissions();
         startNetworkBroadcastReceiver(this);
         initViews();
         startNavigationMenu();
 
-    }
-
-    private void checkForPermissions() {
-        if (mPermissions.checkPermissions()) {
-            Log.i("tag", "Permissions granted");
-        } else {
-            Log.i("tag", "Some needed permissions are missing. Requesting them.");
-            mPermissions.requestPermissions(PERMISSIONS_REQUEST_CODE);
-        }
     }
 
     /**
@@ -167,15 +150,6 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         snackbar.setTextColor(getResources().getColor(R.color.red));
         snackbar.show();
         //TODO:: https://gist.github.com/voghDev/71bb95a2525e7e9782b4
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (mPermissions.areAllRequiredPermissionsGranted(permissions, grantResults)) {
-            Toast.makeText(this, "Loading", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this,  "Loading", Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
