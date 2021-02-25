@@ -10,12 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.eraldguri.geophysicslab.api.model.Features;
-import com.eraldguri.geophysicslab.fragments.EarthquakeListFragment;
-import com.eraldguri.geophysicslab.fragments.MapViewFragment;
-import com.eraldguri.geophysicslab.fragments.NearYouFragment;
-
-import java.util.List;
+import com.eraldguri.geophysicslab.fragments.tabs.EarthquakeListFragment;
+import com.eraldguri.geophysicslab.fragments.tabs.MapViewFragment;
+import com.eraldguri.geophysicslab.fragments.tabs.NearYouFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class TabsAdapter extends FragmentStatePagerAdapter {

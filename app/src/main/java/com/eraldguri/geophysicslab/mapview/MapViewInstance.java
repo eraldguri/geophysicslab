@@ -7,7 +7,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
-public class MapViewInstance  {
+public class MapViewInstance {
 
     private static final String TAG = "Tag";
     private final Context mContext;

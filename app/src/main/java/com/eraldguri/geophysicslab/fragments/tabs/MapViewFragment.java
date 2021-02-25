@@ -1,4 +1,4 @@
-package com.eraldguri.geophysicslab.fragments;
+package com.eraldguri.geophysicslab.fragments.tabs;
 
 import android.os.Build;
 import android.os.Bundle;

@@ -1,16 +1,16 @@
-package com.eraldguri.geophysicslab.fragments;
+package com.eraldguri.geophysicslab.fragments.tabs;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,12 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import com.eraldguri.geophysicslab.EarthquakeListAdapter;
-import com.eraldguri.geophysicslab.MainActivity;
 import com.eraldguri.geophysicslab.R;
 import com.eraldguri.geophysicslab.api.model.Features;
 import com.eraldguri.geophysicslab.api.model.retrofit.ApiViewModel;
-import com.eraldguri.geophysicslab.api.model.retrofit.RetrofitHelper;
+import com.eraldguri.geophysicslab.fragments.EarthquakeFragment;
 import com.eraldguri.geophysicslab.navigation.EarthquakesFragment;
+import com.eraldguri.geophysicslab.util.DateTimeUtil;
 import com.eraldguri.geophysicslab.util.DividerItemDecorator;
 import com.eraldguri.geophysicslab.util.StringUtils;
 
@@ -100,9 +100,31 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemClick(int position, List<Features> features) {
-        Log.d("tag", "clicked: " + position);
+        Features quakes = features.get(position);
+
+        FragmentManager fragmentManager = getChildFragmentManager();
+        Fragment earthquakeFragment = new EarthquakeFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.earthquake_list_container, earthquakeFragment)
+                .commit();
+
+        double[] coordinates = quakes.getGeometry().getCoordinates();
+        String dateTime = quakes.getProperties().getTime();
+        String formattedTime = DateTimeUtil.parseDateTimeFromString(dateTime);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("title", quakes.getProperties().getPlace());
+        bundle.putDouble("magnitude", quakes.getProperties().getMagnitude());
+        bundle.putDouble("latitude", coordinates[1]);
+        bundle.putDouble("longitude", coordinates[0]);
+        bundle.putDouble("depth", coordinates[2]);
+        bundle.putString("date_time", formattedTime);
+        bundle.putInt("tsunami", quakes.getProperties().getTsunami());
+
+        earthquakeFragment.setArguments(bundle);
     }
 
 }
