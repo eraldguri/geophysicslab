@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,18 +20,23 @@ import com.eraldguri.geophysicslab.api.model.Features;
 import com.eraldguri.geophysicslab.util.DateTimeUtil;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class EarthquakeListAdapter extends RecyclerView.Adapter<EarthquakeListAdapter.EarthquakeListViewHolder> {
+public class EarthquakeListAdapter extends
+        RecyclerView.Adapter<EarthquakeListAdapter.EarthquakeListViewHolder> implements Filterable {
 
     private final Context mContext;
     private final List<Features> features;
     private final OnItemClickListener onItemClickListener;
+    private final List<Features> filteredFeatures;
 
     public EarthquakeListAdapter(Context context, List<Features> features, OnItemClickListener onItemClickListener) {
         mContext = context;
         this.features = features;
         this.onItemClickListener = onItemClickListener;
+
+        filteredFeatures = new ArrayList<>(features);
     }
 
     @NonNull
@@ -88,6 +95,40 @@ public class EarthquakeListAdapter extends RecyclerView.Adapter<EarthquakeListAd
     @Override
     public int getItemCount() {
         return features == null ? 0 : features.size();
+    }
+
+    private final Filter magnitudeFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Features> magList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                magList.addAll(filteredFeatures);
+            } else {
+                String input = constraint.toString();
+                for (Features feature: filteredFeatures) {
+                    String m_feature = String.valueOf(feature.getProperties().getMagnitude());
+                    if (m_feature.contains(input)) {
+                        magList.add(feature);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = magList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            features.clear();
+            features.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    @Override
+    public Filter getFilter() {
+        return magnitudeFilter;
     }
 
     public static class EarthquakeListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

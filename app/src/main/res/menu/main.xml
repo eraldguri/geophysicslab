@@ -2,8 +2,46 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_magnitude"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="@string/magnitude"
+        app:showAsAction="never">
+
+        <menu>
+            <item
+                android:id="@+id/magnitude_all"
+                android:title="@string/all_magnitude" />
+            <item
+                android:id="@+id/magnitude_3"
+                android:title="@string/over3_magnitude" />
+            <item
+                android:id="@+id/magnitude_4"
+                android:title="@string/over4_magnitude" />
+            <item
+                android:id="@+id/magnitude_5"
+                android:title="@string/over5_magnitude" />
+            <item
+                android:id="@+id/magnitude_strong"
+                android:title="@string/strong_magnitude" />
+        </menu>
+
+    </item>
+
+    <item
+        android:id="@+id/action_export"
+        android:orderInCategory="100"
+        android:title="@string/export"
+        app:showAsAction="never">
+
+        <menu>
+            <item
+                android:id="@+id/csv_export"
+                android:title="@string/csv_export" />
+            <item
+                android:id="@+id/pdf_export"
+                android:title="@string/pdf_export" />
+        </menu>
+
+    </item>
+
 </menu>

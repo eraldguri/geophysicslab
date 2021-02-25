@@ -174,4 +174,29 @@ public class Properties implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    @Override
+    public String toString() {
+        return "Properties{" +
+                "mag=" + mag +
+                ", place='" + place + '\'' +
+                ", time='" + time + '\'' +
+                ", updated='" + updated + '\'' +
+                ", felt='" + felt + '\'' +
+                ", cdi='" + cdi + '\'' +
+                ", mmi='" + mmi + '\'' +
+                ", alert='" + alert + '\'' +
+                ", status='" + status + '\'' +
+                ", tsunami=" + tsunami +
+                ", sig=" + sig +
+                ", origin='" + origin + '\'' +
+                ", nst='" + nst + '\'' +
+                ", dmin='" + dmin + '\'' +
+                ", rms='" + rms + '\'' +
+                ", gap='" + gap + '\'' +
+                ", magType='" + magType + '\'' +
+                ", type='" + type + '\'' +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }
