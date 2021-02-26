@@ -1,9 +1,8 @@
-package com.eraldguri.geophysicslab;
+package com.eraldguri.geophysicslab.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,10 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.eraldguri.geophysicslab.R;
 import com.eraldguri.geophysicslab.api.model.Features;
 import com.eraldguri.geophysicslab.util.DateTimeUtil;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 

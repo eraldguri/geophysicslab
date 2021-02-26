@@ -1,4 +1,4 @@
-package com.eraldguri.geophysicslab;
+package com.eraldguri.geophysicslab.adapter;
 
 import android.os.Build;
 import android.view.ViewGroup;

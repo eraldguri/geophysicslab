@@ -13,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.eraldguri.geophysicslab.R;
+import com.eraldguri.geophysicslab.adapter.ExpandableListViewAdapter;
 import com.eraldguri.geophysicslab.api.model.retrofit.ApiViewModel;
 import com.eraldguri.geophysicslab.fragments.tabs.EarthquakeListFragment;
 import com.eraldguri.geophysicslab.mapview.MapViewInstance;
@@ -28,15 +31,23 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class EarthquakeFragment extends Fragment implements OnMapReadyCallback {
 
     private MapView mMapView;
     private GoogleMap mGoogleMap;
     private static final String MAP_VIEW_KEY = "MapViewKey";
-    private boolean cameraPositionUpdate;
     private static final String BACK_STACK_ROOT_TAG = "earthquake_fragment";
 
-    private TextView rowMagnitude, rowRegion, rowDepth, rowDate;
+    private ExpandableListView expandableListView;
+    private ExpandableListViewAdapter expandableListAdapter;
+    private List<String> expandableListTitle;
+
+    private HashMap<String, List<String>> expandableListDetail;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,15 +81,27 @@ public class EarthquakeFragment extends Fragment implements OnMapReadyCallback {
 
     private void initViews(View view){
         mMapView = view.findViewById(R.id.mapView_for_quake);
-        rowMagnitude = view.findViewById(R.id.row_magnitude);
-        rowRegion = view.findViewById(R.id.row_region);
-        rowMagnitude = view.findViewById(R.id.row_magnitude);
-        rowDepth = view.findViewById(R.id.row_depth);
-        rowDate = view.findViewById(R.id.row_date);
+        expandableListView = view.findViewById(R.id.expandableListView);
     }
 
     private void setupMap() {
         Bundle bundle = this.getArguments();
+        expandableListDetail = getData(bundle);
+        expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
+        expandableListAdapter = new ExpandableListViewAdapter(requireContext(),
+                expandableListTitle, expandableListDetail);
+        expandableListView.setAdapter(expandableListAdapter);
+        expandableListView.setOnGroupExpandListener(groupPosition -> {
+
+        });
+
+        expandableListView.setOnGroupCollapseListener(groupPosition -> {
+
+        });
+    }
+
+    private HashMap<String, List<String>> getData(Bundle bundle) {
+        HashMap<String, List<String>> _expandableListDetail = null;
         if (bundle != null) {
             String region = bundle.getString("title");
             double magnitude = bundle.getDouble("magnitude");
@@ -86,6 +109,18 @@ public class EarthquakeFragment extends Fragment implements OnMapReadyCallback {
             double longitude = bundle.getDouble("longitude");
             String dateTime = bundle.getString("date_time");
             double depth = bundle.getDouble("depth");
+            int tsunami = bundle.getInt("tsunami");
+            String felt = bundle.getString("felt");
+
+            int tz = bundle.getInt("tz");
+            String cdi = bundle.getString("cdi");
+            String mmi = bundle.getString("mmi");
+            int sig = bundle.getInt("sig");
+            int nst = bundle.getInt("nst");
+            double dmin = bundle.getDouble("dmin");
+            double rms = bundle.getDouble("rms");
+            double gap = bundle.getDouble("gap");
+            String magType = bundle.getString("magType");
 
             LatLng latLng = new LatLng(latitude, longitude);
             MarkerOptions markerOptions = new MarkerOptions();
@@ -93,14 +128,45 @@ public class EarthquakeFragment extends Fragment implements OnMapReadyCallback {
             mGoogleMap.addMarker(markerOptions);
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 8.0f));
 
-            // set TextViews
-            rowMagnitude.setText(String.valueOf(magnitude));
-            rowRegion.setText(region);
-            rowDepth.setText(depth + " km");
-            rowDate.setText(dateTime);
-        }
-    }
+            _expandableListDetail = new HashMap<>();
+            List<String> geometry = new ArrayList<>();
+            geometry.add("Latitude " + latitude);
+            geometry.add("Longitude " + longitude);
+            geometry.add("Depth " + depth);
 
+            List<String> properties = new ArrayList<>();
+            properties.add("Region    " + region);
+            properties.add("Magnitude " + magnitude);
+            properties.add("Date/Time " + dateTime);
+
+            if (tsunami == 1) {
+                properties.add("Tsunami " + "Yes");
+            } else {
+                properties.add("Tsunami " + "No");
+            }
+
+            if (felt == null) {
+                properties.add("Intensity " + "No");
+            } else {
+                properties.add("Intensity " + felt);
+            }
+
+            properties.add("tz " + tz);
+            properties.add("cdi " + cdi);
+            properties.add("mmi " + mmi);
+            properties.add("sig " + sig);
+            properties.add("nst " + nst);
+            properties.add("dmin " + dmin);
+            properties.add("rms " + rms);
+            properties.add("gap " + gap);
+            properties.add("magType " + magType);
+
+            _expandableListDetail.put("geometry", geometry);
+            _expandableListDetail.put("properties", properties);
+        }
+
+        return _expandableListDetail;
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

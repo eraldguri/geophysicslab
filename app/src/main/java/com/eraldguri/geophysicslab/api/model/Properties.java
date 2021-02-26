@@ -7,6 +7,7 @@ public class Properties implements Serializable {
     public String place;
     public String time;
     public String updated;
+    private int tz;
     public String felt;
     public String cdi;
     public String mmi;
@@ -15,13 +16,21 @@ public class Properties implements Serializable {
     public int tsunami;
     public int sig;
     public String origin;
-    public String nst;
-    public String dmin;
-    public String rms;
-    public String gap;
+    public int nst;
+    public double dmin;
+    public double rms;
+    public double gap;
     public String magType;
     public String type;
     public String title;
+
+    public int getTz() {
+        return tz;
+    }
+
+    public void setTz(int tz) {
+        this.tz = tz;
+    }
 
     public double getMagnitude() {
         return mag;
@@ -119,35 +128,35 @@ public class Properties implements Serializable {
         this.origin = origin;
     }
 
-    public String getNst() {
+    public int getNst() {
         return nst;
     }
 
-    public void setNst(String nst) {
+    public void setNst(int nst) {
         this.nst = nst;
     }
 
-    public String getDmin() {
+    public double getDmin() {
         return dmin;
     }
 
-    public void setDmin(String dmin) {
+    public void setDmin(double dmin) {
         this.dmin = dmin;
     }
 
-    public String getRms() {
+    public double getRms() {
         return rms;
     }
 
-    public void setRms(String rms) {
+    public void setRms(double rms) {
         this.rms = rms;
     }
 
-    public String getGap() {
+    public double getGap() {
         return gap;
     }
 
-    public void setGap(String gap) {
+    public void setGap(double gap) {
         this.gap = gap;
     }
 

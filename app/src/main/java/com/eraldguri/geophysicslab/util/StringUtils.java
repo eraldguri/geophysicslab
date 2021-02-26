@@ -1,6 +1,6 @@
 package com.eraldguri.geophysicslab.util;
 
-import com.eraldguri.geophysicslab.EarthquakeListAdapter;
+import com.eraldguri.geophysicslab.adapter.EarthquakeListAdapter;
 
 public class StringUtils {
 

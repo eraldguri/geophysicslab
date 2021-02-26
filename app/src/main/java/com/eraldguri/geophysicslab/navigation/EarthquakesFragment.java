@@ -13,12 +13,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.eraldguri.geophysicslab.R;
-import com.eraldguri.geophysicslab.TabsAdapter;
-import com.eraldguri.geophysicslab.api.model.Features;
+import com.eraldguri.geophysicslab.adapter.TabsAdapter;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class EarthquakesFragment extends Fragment{

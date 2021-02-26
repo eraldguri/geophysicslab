@@ -17,7 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import com.eraldguri.geophysicslab.EarthquakeListAdapter;
+import com.eraldguri.geophysicslab.adapter.EarthquakeListAdapter;
 import com.eraldguri.geophysicslab.R;
 import com.eraldguri.geophysicslab.api.model.Features;
 import com.eraldguri.geophysicslab.api.model.retrofit.ApiViewModel;
@@ -123,6 +123,16 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
         bundle.putDouble("depth", coordinates[2]);
         bundle.putString("date_time", formattedTime);
         bundle.putInt("tsunami", quakes.getProperties().getTsunami());
+        bundle.putString("felt", quakes.getProperties().getFelt());
+        bundle.putInt("tz", quakes.getProperties().getTz());
+        bundle.putString("cdi", quakes.getProperties().getCdi());
+        bundle.putString("mmi", quakes.getProperties().getMmi());
+        bundle.putInt("sig", quakes.getProperties().getSig());
+        bundle.putInt("nst", quakes.getProperties().getNst());
+        bundle.putDouble("dmin", quakes.getProperties().getDmin());
+        bundle.putDouble("rms",  quakes.getProperties().getRms());
+        bundle.putDouble("gap", quakes.getProperties().getGap());
+        bundle.putString("magType", quakes.getProperties().getMagType());
 
         earthquakeFragment.setArguments(bundle);
     }
