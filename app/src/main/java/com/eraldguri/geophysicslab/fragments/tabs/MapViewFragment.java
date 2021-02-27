@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.eraldguri.geophysicslab.R;
 import com.eraldguri.geophysicslab.api.model.Features;
-import com.eraldguri.geophysicslab.api.model.retrofit.ApiViewModel;
+import com.eraldguri.geophysicslab.api.retrofit.ApiViewModel;
 import com.eraldguri.geophysicslab.mapview.ClusterRenderManager;
 import com.eraldguri.geophysicslab.mapview.EarthquakeClusterItem;
 import com.eraldguri.geophysicslab.mapview.MapViewInstance;

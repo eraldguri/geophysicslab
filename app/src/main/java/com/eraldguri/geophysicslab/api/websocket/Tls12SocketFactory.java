@@ -1,4 +1,4 @@
-package com.eraldguri.geophysicslab.api.model.websocket;
+package com.eraldguri.geophysicslab.api.websocket;
 
 import java.io.IOException;
 import java.net.InetAddress;

@@ -1,6 +1,5 @@
 package com.eraldguri.geophysicslab;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -8,21 +7,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.Toast;
 
-import com.eraldguri.geophysicslab.api.model.Earthquake;
-import com.eraldguri.geophysicslab.api.model.Features;
-import com.eraldguri.geophysicslab.api.model.retrofit.ApiViewModel;
-import com.eraldguri.geophysicslab.api.model.retrofit.HttpRequestHelper;
-import com.eraldguri.geophysicslab.api.model.websocket.WebSocketBuilder;
-import com.eraldguri.geophysicslab.permissions.PermissionsUtil;
+import com.eraldguri.geophysicslab.api.websocket.WebSocketBuilder;
 import com.eraldguri.geophysicslab.util.NetworkStateReceiver;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -31,16 +22,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class MainActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener,

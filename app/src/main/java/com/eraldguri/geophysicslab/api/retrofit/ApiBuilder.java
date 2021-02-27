@@ -1,4 +1,4 @@
-package com.eraldguri.geophysicslab.api.model.retrofit;
+package com.eraldguri.geophysicslab.api.retrofit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

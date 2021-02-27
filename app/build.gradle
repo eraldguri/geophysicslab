@@ -47,6 +47,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.maps.android:android-maps-utils:2.0.3'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation group: 'com.opencsv', name: 'opencsv', version: '5.3'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

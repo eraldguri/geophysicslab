@@ -1,20 +1,13 @@
-package com.eraldguri.geophysicslab.api.model.websocket;
+package com.eraldguri.geophysicslab.api.websocket;
 
 import android.os.Build;
 import android.util.Log;
 
-import com.eraldguri.geophysicslab.BuildConfig;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -28,7 +21,6 @@ import okhttp3.Response;
 import okhttp3.TlsVersion;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
-import okio.ByteString;
 
 public class WebSocketBuilder extends WebSocketListener {
 

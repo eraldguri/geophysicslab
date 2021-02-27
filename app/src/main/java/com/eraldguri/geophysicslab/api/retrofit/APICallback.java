@@ -1,4 +1,4 @@
-package com.eraldguri.geophysicslab.api.model.retrofit;
+package com.eraldguri.geophysicslab.api.retrofit;
 
 import com.eraldguri.geophysicslab.api.model.Earthquake;
 

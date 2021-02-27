@@ -7,28 +7,22 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 
 import com.eraldguri.geophysicslab.R;
 import com.eraldguri.geophysicslab.adapter.ExpandableListViewAdapter;
-import com.eraldguri.geophysicslab.api.model.retrofit.ApiViewModel;
 import com.eraldguri.geophysicslab.fragments.tabs.EarthquakeListFragment;
 import com.eraldguri.geophysicslab.mapview.MapViewInstance;
-import com.eraldguri.geophysicslab.util.DateTimeUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -43,11 +37,6 @@ public class EarthquakeFragment extends Fragment implements OnMapReadyCallback {
     private static final String BACK_STACK_ROOT_TAG = "earthquake_fragment";
 
     private ExpandableListView expandableListView;
-    private ExpandableListViewAdapter expandableListAdapter;
-    private List<String> expandableListTitle;
-
-    private HashMap<String, List<String>> expandableListDetail;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,9 +75,9 @@ public class EarthquakeFragment extends Fragment implements OnMapReadyCallback {
 
     private void setupMap() {
         Bundle bundle = this.getArguments();
-        expandableListDetail = getData(bundle);
-        expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
-        expandableListAdapter = new ExpandableListViewAdapter(requireContext(),
+        HashMap<String, List<String>> expandableListDetail = getData(bundle);
+        List<String> expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
+        ExpandableListViewAdapter expandableListAdapter = new ExpandableListViewAdapter(requireContext(),
                 expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.setOnGroupExpandListener(groupPosition -> {

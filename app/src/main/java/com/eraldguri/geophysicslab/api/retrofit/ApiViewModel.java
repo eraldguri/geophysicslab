@@ -1,13 +1,11 @@
-package com.eraldguri.geophysicslab.api.model.retrofit;
+package com.eraldguri.geophysicslab.api.retrofit;
 
 import android.util.Log;
-import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.eraldguri.geophysicslab.R;
 import com.eraldguri.geophysicslab.api.model.Features;
 
 import java.util.List;

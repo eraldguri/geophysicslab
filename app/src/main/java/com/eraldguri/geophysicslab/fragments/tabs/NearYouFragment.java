@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -18,9 +17,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.eraldguri.geophysicslab.R;
-import com.eraldguri.geophysicslab.api.model.Earthquake;
 import com.eraldguri.geophysicslab.api.model.Features;
-import com.eraldguri.geophysicslab.api.model.retrofit.ApiViewModel;
+import com.eraldguri.geophysicslab.api.retrofit.ApiViewModel;
 import com.eraldguri.geophysicslab.mapview.MapViewInstance;
 import com.eraldguri.geophysicslab.permissions.PermissionUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -32,8 +30,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

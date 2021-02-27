@@ -1,4 +1,4 @@
-package com.eraldguri.geophysicslab.api.model.retrofit;
+package com.eraldguri.geophysicslab.api.retrofit;
 
 import android.accounts.NetworkErrorException;
 import android.util.Log;
@@ -8,14 +8,11 @@ import com.eraldguri.geophysicslab.api.model.Features;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import okhttp3.ResponseBody;
-import okio.Timeout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
