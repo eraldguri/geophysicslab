@@ -20,4 +20,10 @@ public class GeoSnackBar {
         snackbar.show();
     }
 
+    public static void errorSnackBar(Context context, View view, String text, int duration) {
+        Snackbar snackbar = Snackbar.make(view, text, duration);
+        snackbar.setTextColor(context.getResources().getColor(R.color.red));
+        snackbar.show();
+    }
+
 }

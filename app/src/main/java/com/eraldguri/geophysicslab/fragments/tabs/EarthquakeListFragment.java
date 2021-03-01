@@ -1,5 +1,8 @@
 package com.eraldguri.geophysicslab.fragments.tabs;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -10,13 +13,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.eraldguri.geophysicslab.adapter.EarthquakeListAdapter;
 import com.eraldguri.geophysicslab.R;
@@ -29,6 +35,7 @@ import com.eraldguri.geophysicslab.permissions.PermissionUtil;
 import com.eraldguri.geophysicslab.util.DateTimeUtil;
 import com.eraldguri.geophysicslab.util.DividerItemDecorator;
 import com.eraldguri.geophysicslab.util.GeoSnackBar;
+import com.eraldguri.geophysicslab.util.RealPathUtil;
 import com.eraldguri.geophysicslab.util.StringUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.opencsv.CSVWriter;
@@ -52,11 +59,15 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
 
     private PermissionUtil permissionUtil;
     private boolean isDirectoryCreated;
-    private boolean isCSVCreated;
+    private boolean exists = false;
     private static final int SNACK_BAR_DURATION = 5000;
     private boolean success = false;
+    private File file;
 
-    int counter = 0;
+    // dialog
+    private TextView edtFilenameDialog;
+
+    private String filename;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -80,85 +91,116 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
+    private void openFileDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        LayoutInflater inflate = requireActivity().getLayoutInflater();
+        View dialogView = inflate.inflate(R.layout.file_creator_dialog, null);
+
+        edtFilenameDialog       = dialogView.findViewById(R.id.edt_filename_dialog);
+        Button saveFileButton   = dialogView.findViewById(R.id.file_dialog_save_button);
+        Button cancelFileButton = dialogView.findViewById(R.id.file_dialog_cancel_button);
+
+        AlertDialog dialog = builder.setView(dialogView).create();
+
+        saveFileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filename = edtFilenameDialog.getText().toString();
+                createFile();
+                if (file.exists() && file.getName().equals(filename + StringUtils.csvExtension)) {
+                    GeoSnackBar.errorSnackBar(requireContext(), dialogView, "File " + filename + " exists", 3000);
+                } else {
+                    exportToCSV(earthquakes);
+                    dialog.dismiss();
+                    GeoSnackBar.successSnackBar(requireContext(), mFrameLayout, R.string.csv_created, 3000);
+                    Intent openFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + File.separator + StringUtils.csvDirectory + File.separator);
+                    openFileIntent.setDataAndType(uri, "text/csv");
+                    requireActivity().startActivityForResult(openFileIntent, 100);
+                }
+            }
+        });
+
+        cancelFileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void createFile() {
+        File root = Environment.getExternalStorageDirectory();
+        File directory = new File(root.getAbsolutePath() + "/" + StringUtils.csvDirectory);
+        if (!directory.exists() && !isDirectoryCreated) {
+            isDirectoryCreated = directory.mkdirs();
+        }
+        file = new File(directory, filename + StringUtils.csvExtension);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void exportToCSV(List<Features> features) {
-       File root = Environment.getExternalStorageDirectory();
-       File dir = new File(root.getAbsolutePath() + StringUtils.csvDirectory);
-       if (!dir.exists() && !isDirectoryCreated) {
-           isDirectoryCreated = dir.mkdirs();
-       }
-       File csvFile = new File(dir, StringUtils.csvName + StringUtils.csvExtension);
-       if (csvFile.getName().equals(StringUtils.csvName + StringUtils.csvExtension)) {
-           StringUtils.replaceWithNewFileName(StringUtils.csvName + StringUtils.csvExtension, dir, StringUtils.csvExtension);
-           //GeoSnackBar.errorSnackBar(requireContext(), mFrameLayout, R.string.csv_exists, SNACK_BAR_DURATION);
-           success = false;
-       } else {
-           try {
-               FileWriter outputFile = new FileWriter(csvFile);
-               CSVWriter writer = new CSVWriter(outputFile);
-               writer.writeNext(StringUtils.header);
+       try {
+           FileWriter outputFile = new FileWriter(file);
+           CSVWriter writer = new CSVWriter(outputFile);
+           writer.writeNext(StringUtils.header);
+           for (int i = 0; i < features.size(); i++) {
+               double[] geometry = features.get(i).getGeometry().getCoordinates();
+               double longitude = geometry[0];
+               double latitude = geometry[1];
+               double depth = geometry[2];
 
-               for (int i = 0; i < features.size(); i++) {
-                   double[] geometry = features.get(i).getGeometry().getCoordinates();
-                   double longitude = geometry[0];
-                   double latitude = geometry[1];
-                   double depth = geometry[2];
+               String place = features.get(i).getProperties().getPlace();
+               double magnitude = features.get(i).getProperties().getMagnitude();
+               String felt = features.get(i).getProperties().getFelt();
 
-                   String place = features.get(i).getProperties().getPlace();
-                   double magnitude = features.get(i).getProperties().getMagnitude();
-                   String felt = features.get(i).getProperties().getFelt();
+               String dateTime = features.get(i).getProperties().getTime();
+               String formattedTime = DateTimeUtil.parseDateTimeFromString(dateTime);
 
-                   String dateTime = features.get(i).getProperties().getTime();
-                   String formattedTime = DateTimeUtil.parseDateTimeFromString(dateTime);
+               int tsunami = features.get(i).getProperties().getTsunami();
+               int tz = features.get(i).getProperties().getTz();
+               String cdi = features.get(i).getProperties().getCdi();
+               String mmi = features.get(i).getProperties().getMmi();
+               int sig = features.get(i).getProperties().getSig();
+               int nst = features.get(i).getProperties().getNst();
+               double dmin = features.get(i).getProperties().getDmin();
+               double rms = features.get(i).getProperties().getRms();
+               double gap = features.get(i).getProperties().getGap();
+               String magType = features.get(i).getProperties().getMagType();
 
-                   int tsunami = features.get(i).getProperties().getTsunami();
-                   int tz = features.get(i).getProperties().getTz();
-                   String cdi = features.get(i).getProperties().getCdi();
-                   String mmi = features.get(i).getProperties().getMmi();
-                   int sig = features.get(i).getProperties().getSig();
-                   int nst = features.get(i).getProperties().getNst();
-                   double dmin = features.get(i).getProperties().getDmin();
-                   double rms = features.get(i).getProperties().getRms();
-                   double gap = features.get(i).getProperties().getGap();
-                   String magType = features.get(i).getProperties().getMagType();
-
-                   String _tsunami = " ";
-                   if (tsunami == 1) {
-                       _tsunami = "Yes";
-                   } else if (tsunami == 0) {
-                       _tsunami = " ";
-                   }
-                   writer.writeNext(new String[]{
-                           place,
-                           felt,
-                           formattedTime,
-                           String.valueOf(magnitude),
-                           String.valueOf(latitude),
-                           String.valueOf(longitude),
-                           String.valueOf(depth),
-                           cdi,
-                           mmi,
-                           String.valueOf(sig),
-                           magType,
-                           String.valueOf(gap),
-                           String.valueOf(rms),
-                           String.valueOf(dmin),
-                           String.valueOf(nst),
-                           String.valueOf(tz),
-                           magType,
-                           _tsunami
-                   });
+               String _tsunami = " ";
+               if (tsunami == 1) {
+                   _tsunami = "Yes";
+               } else if (tsunami == 0) {
+                   _tsunami = " ";
                }
-
-               writer.close();
-               if (success) {
-                   GeoSnackBar.successSnackBar(requireContext(), mFrameLayout, R.string.csv_created, SNACK_BAR_DURATION);
-               } else {
-                   GeoSnackBar.errorSnackBar(requireContext(), mFrameLayout, R.string.failed_to_export, SNACK_BAR_DURATION);
-               }
-
-           } catch (IOException e) {
-               e.printStackTrace();
+               writer.writeNext(new String[]{
+                       place,
+                       felt,
+                       formattedTime, String.valueOf(magnitude),
+                       String.valueOf(latitude),
+                       String.valueOf(longitude),
+                       String.valueOf(depth),
+                       cdi,
+                       mmi,
+                       String.valueOf(sig),
+                       magType,
+                       String.valueOf(gap),
+                       String.valueOf(rms),
+                       String.valueOf(dmin),
+                       String.valueOf(nst),
+                       String.valueOf(tz),
+                       magType,
+                       _tsunami
+               });
            }
+
+           writer.close();
+
+       } catch (IOException e) {
+           e.printStackTrace();
        }
     }
 
@@ -204,7 +246,7 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
     private boolean checkForStoragePermissions() {
         if (permissionUtil.checkPermission(READ_EXTERNAL_STORAGE)
                 && permissionUtil.checkPermission(WRITE_EXTERNAL_STORAGE)) {
-            exportToCSV(earthquakes);
+            openFileDialog();
         } else {
             if (permissionUtil.shouldShowRequestPermissionRationale(requireActivity(), WRITE_EXTERNAL_STORAGE)) {
                 Snackbar.make(mFrameLayout,
@@ -231,7 +273,7 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
         @Override
         public void permissionGranted() {
             Toast.makeText(requireContext(), "Permissions granted", Toast.LENGTH_LONG).show();
-            exportToCSV(earthquakes);
+            openFileDialog();
         }
 
         @Override
