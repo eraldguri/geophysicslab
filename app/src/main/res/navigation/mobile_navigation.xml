@@ -11,4 +11,10 @@
         android:label="@string/menu_earthquakes"
         tools:layout="@layout/fragment_earthquakes" />
 
+    <fragment
+        android:id="@+id/nav_core_logging"
+        android:name="com.eraldguri.geophysicslab.navigation.CoreLoggingFragment"
+        android:label="@string/core_logging"
+        tools:layout="@layout/fragment_core_logging" />
+
 </navigation>

@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
      */
     private void startNavigationMenu() {
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_earthquakes)
+                R.id.nav_earthquakes, R.id.nav_core_logging)
                 .setOpenableLayout(mDrawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

@@ -59,7 +59,7 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
 
     private PermissionUtil permissionUtil;
     private boolean isDirectoryCreated;
-    private boolean exists = false;
+    private final boolean exists = false;
     private static final int SNACK_BAR_DURATION = 5000;
     private boolean success = false;
     private File file;
@@ -114,7 +114,8 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
                     dialog.dismiss();
                     GeoSnackBar.successSnackBar(requireContext(), mFrameLayout, R.string.csv_created, 3000);
                     Intent openFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + File.separator + StringUtils.csvDirectory + File.separator);
+                    Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() + File.separator
+                            + StringUtils.csvDirectory + File.separator);
                     openFileIntent.setDataAndType(uri, "text/csv");
                     requireActivity().startActivityForResult(openFileIntent, 100);
                 }

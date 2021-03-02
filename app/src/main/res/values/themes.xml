@@ -19,6 +19,19 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="EditTextInputs" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/round_inputs</item>
+        <item name="android:fontFamily">@font/roboto_mono_bold</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">@dimen/padding_start_edit_text</item>
+        <item name="android:paddingEnd" tools:targetApi="jelly_bean_mr1">@dimen/padding_start_edit_text</item>
+    </style>
+
+    <style name="TextViewInputs" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/roboto_mono_bold</item>
+        <item name="android:textSize">@dimen/edittext_text_size</item>
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
     <style name="Theme.GeoPhysicsLab.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.GeoPhysicsLab.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

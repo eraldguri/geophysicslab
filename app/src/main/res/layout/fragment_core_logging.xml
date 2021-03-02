@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context=".navigation.CoreLoggingFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/TextViewInputs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/psn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_psn"
+                style="@style/EditTextInputs"
+                android:layout_width="185dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/TextViewInputs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="168dp"
+                android:layout_marginLeft="168dp"
+                android:text="@string/pin"
+                app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="@+id/textView3"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_pin"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/round_inputs"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_core_logging_psn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edt_core_logging_psn"
+                app:layout_constraintTop_toTopOf="@+id/edt_core_logging_psn"
+                tools:ignore="TextFields" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/bin"
+                style="@style/TextViewInputs"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_psn"
+                app:layout_constraintTop_toBottomOf="@+id/edt_core_logging_psn" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_bin"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_psn"
+                app:layout_constraintStart_toStartOf="@+id/textView5"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/TextViewInputs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/project_name"
+                app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_project_name"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_core_logging_bin"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_pin"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_pin"
+                app:layout_constraintTop_toTopOf="@+id/edt_core_logging_bin" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                style="@style/TextViewInputs"
+                android:text="Boring ID"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_bin"
+                app:layout_constraintTop_toBottomOf="@+id/edt_core_logging_bin" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_boring_id"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_bin"
+                app:layout_constraintStart_toStartOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextViewInputs"
+                android:text="@string/surface_elevation"
+                app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                app:layout_constraintStart_toStartOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_surface_elevation"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_core_logging_boring_id"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_project_name"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_project_name"
+                app:layout_constraintTop_toTopOf="@+id/edt_core_logging_boring_id" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/depth_from"
+                style="@style/TextViewInputs"
+                app:layout_constraintStart_toStartOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/edt_core_logging_boring_id" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_depth_from"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_boring_id"
+                app:layout_constraintStart_toStartOf="@+id/textView16"
+                app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/to"
+                style="@style/TextViewInputs"
+                app:layout_constraintBottom_toBottomOf="@+id/textView16"
+                app:layout_constraintStart_toStartOf="@+id/textView8"
+                app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_depth_to"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_core_logging_depth_from"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_surface_elevation"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_surface_elevation"
+                app:layout_constraintTop_toTopOf="@+id/edt_core_logging_depth_from" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/number_of_runs"
+                style="@style/TextViewInputs"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_depth_from"
+                app:layout_constraintTop_toBottomOf="@+id/edt_core_logging_depth_from" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_number_of_runs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                style="@style/EditTextInputs"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_depth_from"
+                app:layout_constraintStart_toStartOf="@+id/textView18"
+                app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/core_size"
+                style="@style/TextViewInputs"
+                app:layout_constraintBottom_toBottomOf="@+id/textView18"
+                app:layout_constraintStart_toStartOf="@+id/textView17"
+                app:layout_constraintTop_toTopOf="@+id/textView18" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_core_size"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                style="@style/EditTextInputs"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_depth_to"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_depth_to"
+                app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+            <TextView
+                android:id="@+id/textView9"
+                style="@style/TextViewInputs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/date_evaluated"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_number_of_runs"
+                app:layout_constraintTop_toBottomOf="@+id/edt_core_logging_number_of_runs" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_date_evaluated"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="datetime"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_surface_elevation"
+                app:layout_constraintStart_toStartOf="@+id/textView9"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <TextView
+                android:id="@+id/textView10"
+                style="@style/TextViewInputs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/evaluator_s"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_date_evaluated"
+                app:layout_constraintTop_toBottomOf="@+id/edt_core_logging_date_evaluated" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_evaluator"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_date_evaluated"
+                app:layout_constraintStart_toStartOf="@+id/textView10"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                style="@style/TextViewInputs"
+                android:text="@string/top_of_rock"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_evaluator"
+                app:layout_constraintTop_toBottomOf="@+id/edt_core_logging_evaluator" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_top_of_rock"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_boring_id"
+                app:layout_constraintStart_toStartOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/depth"
+                style="@style/TextViewInputs"
+                app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                app:layout_constraintStart_toStartOf="@+id/textView8"
+                app:layout_constraintTop_toTopOf="@+id/textView11" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_depth"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_core_logging_top_of_rock"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_evaluator"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_surface_elevation"
+                app:layout_constraintTop_toTopOf="@+id/edt_core_logging_top_of_rock" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/top_of_sound_rock"
+                style="@style/TextViewInputs"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_top_of_rock"
+                app:layout_constraintTop_toBottomOf="@+id/edt_core_logging_top_of_rock" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_top_of_sound_rock"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_top_of_rock"
+                app:layout_constraintStart_toStartOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/depth"
+                style="@style/TextViewInputs"
+                app:layout_constraintBottom_toBottomOf="@+id/textView13"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_depth"
+                app:layout_constraintTop_toTopOf="@+id/textView13" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_top_of_sound_rock_depth"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="@+id/edt_core_logging_top_of_sound_rock"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_depth"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_depth"
+                app:layout_constraintTop_toTopOf="@+id/edt_core_logging_top_of_sound_rock" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/comments"
+                style="@style/TextViewInputs"
+                app:layout_constraintStart_toStartOf="@+id/edt_core_logging_top_of_sound_rock"
+                app:layout_constraintTop_toBottomOf="@+id/edt_core_logging_top_of_sound_rock" />
+
+            <EditText
+                android:id="@+id/edt_core_logging_comments"
+                style="@style/EditTextInputs"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="4dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                app:layout_constraintEnd_toEndOf="@+id/edt_core_logging_top_of_sound_rock_depth"
+                app:layout_constraintStart_toStartOf="@+id/textView15"
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>
