@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.eraldguri.geophysicslab.fragments.tabs.EarthquakeListFragment;
 import com.eraldguri.geophysicslab.fragments.tabs.MapViewFragment;
-import com.eraldguri.geophysicslab.fragments.tabs.NearYouFragment;
+import com.eraldguri.geophysicslab.fragments.tabs.SignificantEarthquakesFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class TabsAdapter extends FragmentStatePagerAdapter {
@@ -25,12 +25,12 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
         childFragments = new Fragment[] {
                 new EarthquakeListFragment(),
                 new MapViewFragment(),
-                new NearYouFragment()
+                new SignificantEarthquakesFragment()
         };
         fragmentTitles = new String[] {
                 "Earthquake List",
                 "Map View",
-                "Near You"
+                "Significant Earthquakes"
         };
 
     }

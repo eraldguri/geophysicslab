@@ -43,7 +43,7 @@ public class EarthquakesFragment extends Fragment{
     /**
      * @brief
      *      This method allows to navigate between fragments
-     *      (EarthquakeListFragment, MapViewFragment, NearYouFragment) using tabs with
+     *      (EarthquakeListFragment, MapViewFragment, SignificantEarthquakesFragment) using tabs with
      *      swipeable effect.
      * */
     private void setupTabLayout() {
