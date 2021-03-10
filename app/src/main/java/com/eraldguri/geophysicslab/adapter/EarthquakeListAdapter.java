@@ -142,10 +142,10 @@ public class EarthquakeListAdapter extends
             this.onItemClickListener = onItemClickListener;
             this.features = features;
 
-            magnitude   = itemView.findViewById(R.id.tv_magnitude);
-            place       = itemView.findViewById(R.id.tv_earthquake_place);
-            time        = itemView.findViewById(R.id.tv_earthquake_date_time);
-            tsunami     = itemView.findViewById(R.id.tv_earthquake_tsunami);
+            magnitude   = itemView.findViewById(R.id.significant_quakes_magnitude);
+            place       = itemView.findViewById(R.id.significant_quakes_place);
+            time        = itemView.findViewById(R.id.significant_quakes_date_time);
+            tsunami     = itemView.findViewById(R.id.significant_quakes_intensity);
 
             itemView.setOnClickListener(this);
         }
