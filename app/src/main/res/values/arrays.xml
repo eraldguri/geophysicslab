@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="rockTypes">
+        <item>Sedimentary Rock</item>
+        <item>Metamorphic Rock</item>
+        <item>Igneous Rock</item>
+        <item>Unconsolidated Material</item>
+    </string-array>
+    <string-array name="majorThicks">
+        <item>extremely thick layer(2m)</item>
+        <item>very thick layer(2m-60 cm)</item>
+        <item>thick layer(60 cm - 20 cm)</item>
+        <item>thin layer(20 cm - 6 cm)</item>
+        <item>extremely thin layer(6 cm - 2 cm)</item>
+        <item>laminated layer(2 cm - 0.6 cm)</item>
+        <item>thin laminated layer(less than 0.6 cm)</item>
+    </string-array>
+    <string-array name="major_minor">
+        <item>Interbedding(1:1 – 2:1)</item>
+        <item>InterCalated(2:1 – 4:1)</item>
+        <item>Seldom with(4:1 – 8:1)</item>
+        <item>Single layer(8:1)</item>
+    </string-array>
+    <string-array name="weather">
+        <item>Fresh</item>
+        <item>Light weathered</item>
+        <item>Moderately weathered</item>
+        <item>Highly weathered</item>
+        <item>Completely weathered</item>
+        <item>Residual soil</item>
+    </string-array>
+    <string-array name="sedimentary_structure">
+        <item>Slightly bioturbation</item>
+        <item>Medium bioturbation</item>
+        <item>Strongly bioturbation</item>
+        <item>Imbricated</item>
+        <item>Tabular cross bedding</item>
+        <item>Cross bedding</item>
+        <item>Herring-bone cross bedding</item>
+        <item>Trough cross bedding</item>
+        <item>Ripple mark</item>
+        <item>Load cast</item>
+        <item>Slumping structure</item>
+        <item>Lenticular</item>
+        <item>Deformation during sedimentary process</item>
+        <item>Upward coarsening sequence</item>
+        <item>Downward coarsening sequence</item>
+        <item>Peat</item>
+        <item>Mud block</item>
+        <item>Carbonaceous material</item>
+        <item>Grain support</item>
+        <item>Matrix support</item>
+    </string-array>
+    <string-array name="n_w">
+        <item>N</item>
+        <item>Q</item>
+    </string-array>
+    <string-array name="e_w_s_n">
+        <item>E</item>
+        <item>W</item>
+        <item>S</item>
+        <item>N</item>
+    </string-array>
+    <string-array name="fold_type">
+        <item>Syncline</item>
+        <item>Anticline</item>
+        <item>Continuous fold</item>
+    </string-array>
+</resources>

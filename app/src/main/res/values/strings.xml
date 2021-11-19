@@ -40,4 +40,18 @@
     <string name="to">To</string>
     <string name="number_of_runs">Number Of runs</string>
     <string name="core_size">Core size</string>
+    <string name="waypoint">Waypoint</string>
+    <string name="major_thick">Major Thick</string>
+    <string name="minor_rock">Minor Rock</string>
+    <string name="minor_thick">Minor Thick</string>
+    <string name="major_minor">Major:Minor</string>
+    <string name="weather">Weather</string>
+    <string name="sedimentary_structure">Sedimentary structure</string>
+    <string name="fault_type">Fault type</string>
+    <string name="dip_direction_dip_angle">DIP direction/DIP angle</string>
+    <string name="compass">Compass</string>
+    <string name="ok">OK</string>
+    <string name="faultdescription">FaultDescription</string>
+    <string name="fold_type">Fold Type</string>
+    <string name="l_limb_atrributes">L limb Atrributes</string>
 </resources>

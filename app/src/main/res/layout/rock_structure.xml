@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/teal_700">
+
+    <TextView
+        android:id="@+id/textView13"
+        style="@style/TextViewInputs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/fault_type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/fault_type_spinner"
+        style="@style/ComboBox"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/dip_direction_dip_angle"
+        style="@style/TextViewInputs"
+        app:layout_constraintStart_toStartOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <EditText
+        android:id="@+id/et_dip_direction"
+        style="@style/EditTextInputs"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView15"
+        style="@style/TextViewInputs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="/"
+        app:layout_constraintBottom_toBottomOf="@+id/et_dip_direction"
+        app:layout_constraintStart_toEndOf="@+id/et_dip_direction"
+        app:layout_constraintTop_toTopOf="@+id/et_dip_direction" />
+
+    <EditText
+        android:id="@+id/et_dip_angle"
+        style="@style/EditTextInputs"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/et_dip_direction"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toTopOf="@+id/et_dip_direction" />
+
+    <ImageButton
+        android:id="@+id/compass_button"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_dip_angle"
+        app:layout_constraintStart_toEndOf="@+id/textView16"
+        app:layout_constraintTop_toTopOf="@+id/et_dip_angle"
+        app:srcCompat="@drawable/ic_baseline_query_builder_24" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:text="@string/compass"
+        style="@style/TextViewInputs"
+        app:layout_constraintBottom_toBottomOf="@+id/et_dip_angle"
+        app:layout_constraintStart_toEndOf="@+id/et_dip_angle"
+        app:layout_constraintTop_toTopOf="@+id/et_dip_angle"
+        app:layout_constraintVertical_bias="0.727" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="N"
+        style="@style/TextViewInputs"
+        app:layout_constraintStart_toStartOf="@+id/et_dip_direction"
+        app:layout_constraintTop_toBottomOf="@+id/et_dip_direction" />
+
+    <Spinner
+        android:id="@+id/n_w_spinner"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        style="@style/ComboBox"
+        android:entries="@array/n_w"
+        app:layout_constraintBottom_toBottomOf="@+id/etdir_n_w"
+        app:layout_constraintStart_toEndOf="@+id/etdir_n_w"
+        app:layout_constraintTop_toTopOf="@+id/etdir_n_w" />
+
+    <EditText
+        android:id="@+id/etdir_n_w"
+        style="@style/EditTextInputs"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/textView17"
+        app:layout_constraintStart_toEndOf="@+id/textView17"
+        app:layout_constraintTop_toTopOf="@+id/textView17" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="/"
+        style="@style/TextViewInputs"
+        app:layout_constraintBottom_toBottomOf="@+id/n_w_spinner"
+        app:layout_constraintStart_toEndOf="@+id/n_w_spinner"
+        app:layout_constraintTop_toTopOf="@+id/n_w_spinner" />
+
+    <EditText
+        android:id="@+id/et_e_w_s_n"
+        style="@style/EditTextInputs"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/n_w_spinner"
+        app:layout_constraintStart_toEndOf="@+id/textView18"
+        app:layout_constraintTop_toTopOf="@+id/n_w_spinner" />
+
+    <Spinner
+        android:id="@+id/e_w_s_n_spinner"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        style="@style/ComboBox"
+        android:entries="@array/e_w_s_n"
+        app:layout_constraintBottom_toBottomOf="@+id/et_e_w_s_n"
+        app:layout_constraintStart_toEndOf="@+id/et_e_w_s_n"
+        app:layout_constraintTop_toTopOf="@+id/et_e_w_s_n" />
+
+    <Button
+        android:id="@+id/rock_structure_ok_button"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:text="@string/ok"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/e_w_s_n_spinner"
+        app:layout_constraintStart_toEndOf="@+id/e_w_s_n_spinner"
+        app:layout_constraintTop_toTopOf="@+id/e_w_s_n_spinner" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/faultdescription"
+        style="@style/TextViewInputs"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <EditText
+        android:id="@+id/etFaultDescription"
+        style="@style/MultilineTextInputs"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView19"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/fold_type"
+        style="@style/TextViewInputs"
+        app:layout_constraintStart_toStartOf="@+id/etFaultDescription"
+        app:layout_constraintTop_toBottomOf="@+id/etFaultDescription" />
+
+    <Spinner
+        android:id="@+id/fold_type_spinner"
+        style="@style/ComboBox"
+        android:entries="@array/fold_type"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView21"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView21"
+        app:layout_constraintTop_toTopOf="@+id/textView21" />
+
+    <TextView
+        android:id="@+id/textView22"
+        style="@style/TextViewInputs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/l_limb_atrributes"
+        app:layout_constraintStart_toStartOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+    <EditText
+        android:id="@+id/et_limb__dip_direction"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:ems="10"
+        android:editable="false"
+        android:inputType="numberDecimal"
+        style="@style/EditTextInputs"
+        app:layout_constraintBottom_toBottomOf="@+id/textView22"
+        app:layout_constraintStart_toEndOf="@+id/textView22"
+        app:layout_constraintTop_toTopOf="@+id/textView22" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="/"
+        style="@style/TextViewInputs"
+        app:layout_constraintBottom_toBottomOf="@+id/et_limb__dip_direction"
+        app:layout_constraintStart_toEndOf="@+id/et_limb__dip_direction"
+        app:layout_constraintTop_toTopOf="@+id/et_limb__dip_direction" />
+
+    <EditText
+        android:id="@+id/et_limb_dip_angle"
+        style="@style/EditTextInputs"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:editable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/et_limb__dip_direction"
+        app:layout_constraintStart_toEndOf="@+id/textView24"
+        app:layout_constraintTop_toTopOf="@+id/et_limb__dip_direction" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_limb_dip_angle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_limb_dip_angle"
+        app:layout_constraintTop_toTopOf="@+id/et_limb_dip_angle"
+        app:srcCompat="@drawable/ic_baseline_query_builder_24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

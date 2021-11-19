@@ -26,10 +26,26 @@
         <item name="android:paddingEnd" tools:targetApi="jelly_bean_mr1">@dimen/padding_start_edit_text</item>
     </style>
 
+    <style name="MultilineTextInputs" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/multiline_text_input</item>
+        <item name="android:fontFamily">@font/roboto_mono_bold</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">@dimen/padding_start_edit_text</item>
+        <item name="android:paddingEnd" tools:targetApi="jelly_bean_mr1">@dimen/padding_start_edit_text</item>
+    </style>
+
     <style name="TextViewInputs" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/roboto_mono_bold</item>
         <item name="android:textSize">@dimen/edittext_text_size</item>
-        <item name="android:textColor">@color/orange</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="ComboBox" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/round_inputs</item>
+        <item name="android:fontFamily">@font/roboto_mono_bold</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">@dimen/padding_start_edit_text</item>
+        <item name="android:paddingEnd" tools:targetApi="jelly_bean_mr1">@dimen/padding_start_edit_text</item>
+        <item name="android:spinnerMode">dropdown</item>
+        <!--<item name="android:drawableEnd">R.drawable.</item>-->
     </style>
 
     <style name="Theme.GeoPhysicsLab.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

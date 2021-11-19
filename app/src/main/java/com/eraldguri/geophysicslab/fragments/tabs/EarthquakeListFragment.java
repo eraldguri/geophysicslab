@@ -213,31 +213,32 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        assert mEarthquakeListAdapter != null;
-        String text;
-        if (item.getItemId() == R.id.magnitude_all) {
-            mEarthquakeListAdapter.getFilter().filter("");
-        } else if (item.getItemId() == R.id.magnitude_3) {
-            text = "3.";
-            StringUtils.isDigit(text, mEarthquakeListAdapter);
-        } else if (item.getItemId() == R.id.magnitude_4) {
-            text = "4.";
-            StringUtils.isDigit(text, mEarthquakeListAdapter);
-        } else if (item.getItemId() == R.id.magnitude_5) {
-            text = "5.";
-            StringUtils.isDigit(text, mEarthquakeListAdapter);
-        } else if (item.getItemId() == R.id.magnitude_strong) {
-            text = "    ";
-            String[] texts = new String[] {"6.", "7.", "8."};
-            for (String s: texts) {
-                if (text.contains(s)) {
-                    if (Character.isDigit(texts[0].charAt(0))) {
-                        mEarthquakeListAdapter.getFilter().filter(text);
+        if (mEarthquakeListAdapter != null) {
+            String text;
+            if (item.getItemId() == R.id.magnitude_all) {
+                mEarthquakeListAdapter.getFilter().filter("");
+            } else if (item.getItemId() == R.id.magnitude_3) {
+                text = "3.";
+                StringUtils.isDigit(text, mEarthquakeListAdapter);
+            } else if (item.getItemId() == R.id.magnitude_4) {
+                text = "4.";
+                StringUtils.isDigit(text, mEarthquakeListAdapter);
+            } else if (item.getItemId() == R.id.magnitude_5) {
+                text = "5.";
+                StringUtils.isDigit(text, mEarthquakeListAdapter);
+            } else if (item.getItemId() == R.id.magnitude_strong) {
+                text = "    ";
+                String[] texts = new String[]{"6.", "7.", "8."};
+                for (String s : texts) {
+                    if (text.contains(s)) {
+                        if (Character.isDigit(texts[0].charAt(0))) {
+                            mEarthquakeListAdapter.getFilter().filter(text);
+                        }
                     }
                 }
+            } else if (item.getItemId() == R.id.csv_export) {
+                return checkForStoragePermissions();
             }
-        } else if (item.getItemId() == R.id.csv_export) {
-            return checkForStoragePermissions();
         }
 
         return false;
