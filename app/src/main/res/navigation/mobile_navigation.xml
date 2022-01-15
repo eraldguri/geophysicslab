@@ -15,6 +15,15 @@
         android:id="@+id/nav_core_logging"
         android:name="com.eraldguri.geophysicslab.navigation.CoreLoggingFragment"
         android:label="@string/core_logging"
-        tools:layout="@layout/fragment_core_logging" />
+        tools:layout="@layout/fragment_core_logging" >
+        <action
+            android:id="@+id/action_nav_core_logging_to_compassFragment"
+            app:destination="@id/compassFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/compassFragment"
+        android:name="com.eraldguri.geophysicslab.fragments.CompassFragment"
+        android:label="fragment_compass"
+        tools:layout="@layout/fragment_compass" />
 
 </navigation>

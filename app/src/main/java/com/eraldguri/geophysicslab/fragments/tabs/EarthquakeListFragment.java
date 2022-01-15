@@ -37,6 +37,7 @@ import com.eraldguri.geophysicslab.util.DividerItemDecorator;
 import com.eraldguri.geophysicslab.util.GeoSnackBar;
 import com.eraldguri.geophysicslab.util.RealPathUtil;
 import com.eraldguri.geophysicslab.util.StringUtils;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.material.snackbar.Snackbar;
 import com.opencsv.CSVWriter;
 import org.jetbrains.annotations.NotNull;
@@ -53,6 +54,9 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
         EarthquakeListAdapter.OnItemClickListener {
 
     private RecyclerView mEarthquakeListView;
+    private SpinKitView spinKitView;
+    private TextView tvLoading;
+
     private EarthquakeListAdapter mEarthquakeListAdapter;
     private FrameLayout mFrameLayout;
     private List<Features> earthquakes;
@@ -88,6 +92,8 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
     private void initViews(View view) {
         mEarthquakeListView = view.findViewById(R.id.rv_earthquake_data_list);
         mFrameLayout = view.findViewById(R.id.earthquake_list_container);
+        spinKitView = view.findViewById(R.id.spin_kit);
+        tvLoading = view.findViewById(R.id.tvLoading);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -297,6 +303,9 @@ public class EarthquakeListFragment extends EarthquakesFragment implements
             mEarthquakeListView.setLayoutManager(new LinearLayoutManager(requireContext()));
             mEarthquakeListView.addItemDecoration(new DividerItemDecorator(requireContext()));
             mEarthquakeListView.setAdapter(mEarthquakeListAdapter);
+
+            spinKitView.setVisibility(View.INVISIBLE);
+            tvLoading.setVisibility(View.INVISIBLE);
 
             this.earthquakes = earthquakes;
         }

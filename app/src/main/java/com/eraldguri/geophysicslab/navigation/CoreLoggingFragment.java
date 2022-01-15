@@ -3,16 +3,19 @@ package com.eraldguri.geophysicslab.navigation;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.eraldguri.geophysicslab.R;
+import com.eraldguri.geophysicslab.fragments.CompassFragment;
 
-public class CoreLoggingFragment extends Fragment {
+public class CoreLoggingFragment extends Fragment implements View.OnClickListener {
 
     private Spinner mRockTypesSpinner;
     private Spinner mMajorThickSpinner;
@@ -22,12 +25,7 @@ public class CoreLoggingFragment extends Fragment {
     private Spinner mSedimentaryStructureSpinner;
     private Spinner mNWSpinner;
 
-    private ArrayAdapter<String> rockTypesAdapter;
-    private ArrayAdapter<String> majorThickAdapter;
-    private ArrayAdapter<String> minorThickAdapter;
-    private ArrayAdapter<String> majorMinorAdapter;
-    private ArrayAdapter<String> weatherAdapter;
-    private ArrayAdapter<String> sedimentaryStructureAdapter;
+    private ImageButton compassButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,22 +46,41 @@ public class CoreLoggingFragment extends Fragment {
         mWeatherSpinner                 = view.findViewById(R.id.weather_spinner);
         mSedimentaryStructureSpinner    = view.findViewById(R.id.sedimentary_structure_spinner);
         mNWSpinner                      = view.findViewById(R.id.n_w_spinner);
+        compassButton                   = view.findViewById(R.id.compass_button);
+
+        compassButton.setOnClickListener(this);
 
         setupSpinners();
     }
 
+    private void compass() {
+        Fragment compassFragment = new CompassFragment();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_core_logging_container, compassFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
     private void setupSpinners() {
-        rockTypesAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
+        ArrayAdapter<String> rockTypesAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
                 requireContext().getResources().getStringArray(R.array.rockTypes));
-        majorThickAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
+        ArrayAdapter<String> majorThickAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
                 requireContext().getResources().getStringArray(R.array.majorThicks));
-        minorThickAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
+        ArrayAdapter<String> minorThickAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
                 requireContext().getResources().getStringArray(R.array.majorThicks));
-        majorMinorAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
+        ArrayAdapter<String> majorMinorAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
                 requireContext().getResources().getStringArray(R.array.major_minor));
-        weatherAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
+        ArrayAdapter<String> weatherAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
                 requireContext().getResources().getStringArray(R.array.weather));
-        sedimentaryStructureAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
+        ArrayAdapter<String> sedimentaryStructureAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line,
                 requireContext().getResources().getStringArray(R.array.sedimentary_structure));
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.compass_button) {
+            compass();
+        }
     }
 }

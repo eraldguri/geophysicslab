@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 
+import com.eraldguri.geophysicslab.api.model.Features;
 import com.eraldguri.geophysicslab.api.websocket.WebSocketBuilder;
 import com.eraldguri.geophysicslab.util.NetworkStateReceiver;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import androidx.annotation.RequiresApi;
 import androidx.navigation.NavController;
@@ -25,6 +27,8 @@ import androidx.appcompat.widget.Toolbar;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class MainActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener,
@@ -144,22 +148,6 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     }
 
     private void parseJsonObject(JSONObject jsonObject) {
-        try {
-            JSONArray dataArray = jsonObject.getJSONArray("data");
-            Log.d("data:", dataArray.toString());
-            for (int i = 0; i < dataArray.length(); i++) {
-                JSONObject dataObject = dataArray.getJSONObject(i);
-                JSONObject propertiesObject = dataObject.getJSONObject("properties");
-                double latitude = propertiesObject.getDouble("lat");
-                double longitude = propertiesObject.getDouble("lon");
-                double magnitude = propertiesObject.getDouble("mag");
-                String flynn_region = propertiesObject.getString("flynn_region");
-                Log.d("tag",
-                        "latitude: " + latitude + " " + "longitude: " + longitude
-                        + " " + "magnitude: " + magnitude + " " + "flynn_region: " + flynn_region);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Gson gson = new Gson();
     }
 }

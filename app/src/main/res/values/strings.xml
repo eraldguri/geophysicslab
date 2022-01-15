@@ -54,4 +54,6 @@
     <string name="faultdescription">FaultDescription</string>
     <string name="fold_type">Fold Type</string>
     <string name="l_limb_atrributes">L limb Atrributes</string>
+
+    <string name="compass_not_supported">Your device doesn\'t support compass</string>
 </resources>
