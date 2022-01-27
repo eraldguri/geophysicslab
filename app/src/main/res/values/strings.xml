@@ -56,4 +56,9 @@
     <string name="l_limb_atrributes">L limb Atrributes</string>
 
     <string name="compass_not_supported">Your device doesn\'t support compass</string>
+    <string name="boring_id">Boring Id</string>
+    <string name="size_range_of_pieces">Size range of pieces</string>
+    <string name="hardness">Hardness</string>
+    <string name="weathering">Weathering</string>
+    <string name="additional_comments">Additional Comments</string>
 </resources>

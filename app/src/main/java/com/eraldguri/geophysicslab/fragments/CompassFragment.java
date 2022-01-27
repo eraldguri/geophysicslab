@@ -36,7 +36,6 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     private final float[] mLastMagnetometer = new float[3];
     private boolean haveSensor = false;
     private boolean haveSensor2 = false;
-    private final boolean mLastAccelerometerSet = false;
     private boolean mLastMagnetometerSet = false;
 
     @Override
@@ -107,6 +106,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
             System.arraycopy(sensorEvent.values, 0, mLastMagnetometer, 0, sensorEvent.values.length);
             mLastMagnetometerSet = true;
         }
+        boolean mLastAccelerometerSet = false;
         if (mLastMagnetometerSet && mLastAccelerometerSet) {
             SensorManager.getRotationMatrix(rotationMatrix, null, mLastAccelerometer, mLastMagnetometer);
             SensorManager.getOrientation(rotationMatrix, orientation);
